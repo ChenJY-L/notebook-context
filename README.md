@@ -159,3 +159,6 @@ python -m unittest discover -s tests
 ## License
 
 MIT
+
+## Thanks
+https://linux.do

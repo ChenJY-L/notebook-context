@@ -159,3 +159,6 @@ python -m unittest discover -s tests
 ## License
 
 MIT
+
+## 友情链接
+https://Linux.do
