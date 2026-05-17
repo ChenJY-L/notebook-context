@@ -15,6 +15,7 @@ EXPORT_SCRIPT = ROOT / "scripts" / "notebook_to_context_md.py"
 APPLY_SCRIPT = ROOT / "scripts" / "context_md_to_notebook.py"
 VALIDATE_SCRIPT = ROOT / "scripts" / "validate_notebook.py"
 INSPECT_SCRIPT = ROOT / "scripts" / "inspect_notebook_outputs.py"
+EXTRACT_SCRIPT = ROOT / "scripts" / "extract_notebook_media.py"
 COMPARE_SCRIPT = ROOT / "scripts" / "compare_context_size.py"
 CHART_SCRIPT = ROOT / "scripts" / "generate_readme_chart.py"
 
@@ -94,6 +95,94 @@ class NotebookContextTests(unittest.TestCase):
         self.assertIn("Summary: stream stdout 6B", inspect.stdout)
         self.assertIn("image/png 4B sha256=", inspect.stdout)
         self.assertIn("hello", inspect.stdout)
+
+    def test_extract_notebook_media_png_and_svg(self) -> None:
+        one_pixel_png = (
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII="
+        )
+        svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1"/></svg>'
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            notebook = tmp_path / "media.ipynb"
+            png_out = tmp_path / "plot.png"
+            svg_out = tmp_path / "plot.svg"
+            notebook.write_text(
+                json.dumps(
+                    {
+                        "nbformat": 4,
+                        "nbformat_minor": 5,
+                        "metadata": {"language_info": {"name": "python"}},
+                        "cells": [
+                            {
+                                "cell_type": "code",
+                                "id": "plot",
+                                "metadata": {},
+                                "execution_count": 1,
+                                "source": "display(fig)\n",
+                                "outputs": [
+                                    {
+                                        "output_type": "display_data",
+                                        "data": {
+                                            "image/png": one_pixel_png,
+                                            "image/svg+xml": svg,
+                                            "text/plain": "<Figure>",
+                                        },
+                                        "metadata": {},
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=1,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            png = self.run_script(
+                EXTRACT_SCRIPT,
+                notebook,
+                "--cell",
+                "plot",
+                "--output",
+                "0",
+                "--mime",
+                "image/png",
+                "--out",
+                png_out,
+            )
+            self.assertIn("image/png", png.stdout)
+            self.assertEqual(png_out.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
+
+            svg_result = self.run_script(
+                EXTRACT_SCRIPT,
+                notebook,
+                "--cell",
+                "plot",
+                "--output",
+                "0",
+                "--mime",
+                "image/svg+xml",
+                "--out",
+                svg_out,
+            )
+            self.assertIn("image/svg+xml", svg_result.stdout)
+            self.assertIn("<svg", svg_out.read_text(encoding="utf-8"))
+
+            missing = self.run_script(
+                EXTRACT_SCRIPT,
+                notebook,
+                "--cell",
+                "plot",
+                "--output",
+                "0",
+                "--mime",
+                "application/pdf",
+                check=False,
+            )
+            self.assertEqual(missing.returncode, 1)
+            self.assertIn("not found", missing.stderr)
 
     def test_compare_context_size_json(self) -> None:
         result = self.run_script(COMPARE_SCRIPT, FIXTURE, "--json")

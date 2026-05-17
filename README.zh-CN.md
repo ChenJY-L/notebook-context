@@ -42,6 +42,7 @@ python scripts/generate_readme_chart.py
 │   ├── context_md_to_notebook.py
 │   ├── validate_notebook.py
 │   ├── inspect_notebook_outputs.py
+│   ├── extract_notebook_media.py
 │   ├── compare_context_size.py
 │   └── generate_readme_chart.py
 └── tests/
@@ -75,6 +76,12 @@ python scripts/validate_notebook.py analysis.ipynb
 python scripts/inspect_notebook_outputs.py analysis.ipynb --cell CELL_ID_OR_INDEX
 ```
 
+需要查看图片或富媒体输出时，只导出指定 payload：
+
+```bash
+python scripts/extract_notebook_media.py analysis.ipynb --cell CELL_ID_OR_INDEX --output 0 --mime image/png --out output.png
+```
+
 比较直接读取 JSON 和使用 skill projection 的上下文大小：
 
 ```bash
@@ -99,6 +106,12 @@ python scripts/inspect_notebook_outputs.py analysis.ipynb --cell plot --output 0
 
 ```bash
 python scripts/inspect_notebook_outputs.py analysis.ipynb --cell plot --summary-only
+```
+
+从某个 output 中导出默认的图片/SVG/PDF 类 payload：
+
+```bash
+python scripts/extract_notebook_media.py analysis.ipynb --cell plot --output 0
 ```
 
 输出机器可读的 context-size 指标：

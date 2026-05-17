@@ -45,6 +45,12 @@ python scripts/inspect_notebook_outputs.py NOTEBOOK.ipynb --cell CELL_ID_OR_INDE
 
 Use `--summary-only` for a compact report, `--output N` for one output, and `--include-rich-text` only when rich text payloads such as HTML/JSON/SVG are needed.
 
+When the task requires viewing an image or other rich media output, extract only that payload:
+
+```bash
+python scripts/extract_notebook_media.py NOTEBOOK.ipynb --cell CELL_ID_OR_INDEX --output N --mime image/png --out output.png
+```
+
 ## Context Size Experiment
 
 When asked to quantify context savings, compare raw notebook JSON with the projected view:
@@ -69,5 +75,6 @@ Use `--json` for machine-readable results. If `tiktoken` is installed, the scrip
 - `scripts/context_md_to_notebook.py`: `.context.md + base .ipynb -> .ipynb`; updates only existing cell sources.
 - `scripts/validate_notebook.py`: validates basic structure and optionally `nbformat` schema when available.
 - `scripts/inspect_notebook_outputs.py`: prints selected cell output summaries and safe text payloads.
+- `scripts/extract_notebook_media.py`: exports one selected rich media payload such as PNG, JPEG, SVG, or PDF.
 - `scripts/compare_context_size.py`: compares raw `.ipynb` JSON size against the skill `.context.md` projection.
 - `scripts/generate_readme_chart.py`: regenerates the README SVG from a synthetic long-output benchmark.

@@ -42,6 +42,7 @@ python scripts/generate_readme_chart.py
 │   ├── context_md_to_notebook.py
 │   ├── validate_notebook.py
 │   ├── inspect_notebook_outputs.py
+│   ├── extract_notebook_media.py
 │   ├── compare_context_size.py
 │   └── generate_readme_chart.py
 └── tests/
@@ -75,6 +76,12 @@ Inspect one cell's outputs:
 python scripts/inspect_notebook_outputs.py analysis.ipynb --cell CELL_ID_OR_INDEX
 ```
 
+Extract one image or rich media payload when you need to view it:
+
+```bash
+python scripts/extract_notebook_media.py analysis.ipynb --cell CELL_ID_OR_INDEX --output 0 --mime image/png --out output.png
+```
+
 Compare context size for direct JSON reading versus the skill projection:
 
 ```bash
@@ -99,6 +106,12 @@ Inspect summaries only:
 
 ```bash
 python scripts/inspect_notebook_outputs.py analysis.ipynb --cell plot --summary-only
+```
+
+Export the default image/SVG/PDF-like payload from an output:
+
+```bash
+python scripts/extract_notebook_media.py analysis.ipynb --cell plot --output 0
 ```
 
 Print machine-readable context-size metrics:
