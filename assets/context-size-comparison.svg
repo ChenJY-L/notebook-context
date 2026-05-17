@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="430" viewBox="0 0 960 430" role="img" aria-labelledby="title desc">
+<title id="title">Notebook Context Size Comparison</title>
+<desc id="desc">Synthetic notebook benchmark comparing direct ipynb JSON against notebook-context Markdown projection.</desc>
+<rect width="960" height="430" fill="#F8FAFC" />
+<rect x="32" y="28" width="896" height="374" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+<text x="64" y="72" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" fill="#111827" text-anchor="start">Context Size Comparison</text>
+<text x="64" y="104" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#475569" text-anchor="start">Synthetic notebook: long table, long log, and image output</text>
+<text x="64" y="145" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#111827" text-anchor="start">Raw .ipynb JSON</text>
+<rect x="246" y="122" width="620" height="34" rx="6" fill="#DC2626" />
+<text x="854" y="145" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="end">54,629 estimated tokens</text>
+<text x="64" y="207" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#111827" text-anchor="start">Skill .context.md</text>
+<rect x="246" y="184" width="8" height="34" rx="6" fill="#2563EB" />
+<text x="266" y="207" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1E3A8A" text-anchor="start">371 estimated tokens</text>
+<line x1="246" y1="248" x2="866" y2="248" stroke="#E2E8F0" stroke-width="1" />
+<text x="64" y="292" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="800" fill="#047857" text-anchor="start">99.32% fewer estimated tokens</text>
+<text x="64" y="324" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="start">Raw: 218,516 chars / 218,516 bytes. Projection: 1,483 chars / 1,483 bytes.</text>
+<text x="64" y="350" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#64748B" text-anchor="start">Token count uses the repository experiment default: ceil(chars / 4). Install tiktoken for model-aware counts.</text>
+<text x="64" y="374" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#64748B" text-anchor="start">Regenerate with: python scripts/generate_readme_chart.py</text>
+</svg>

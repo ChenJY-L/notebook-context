@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notebook Context"
+  short_description: "Compact safe Jupyter notebook editing"
+  default_prompt: "Use $notebook-context to safely inspect and edit a Jupyter notebook."
