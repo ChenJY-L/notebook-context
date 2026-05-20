@@ -7,6 +7,10 @@ description: Safely read and edit Jupyter notebooks for coding-agent workflows b
 
 Use this skill whenever a task involves reading, explaining, editing, validating, or inspecting a Jupyter `.ipynb` file.
 
+## Prerequisites
+
+Python 3.10+ on `PATH`. The scripts use only the standard library; `tiktoken` is an optional dependency for `compare_context_size.py`.
+
 ## Core Rule
 
 Treat the `.ipynb` file as the authority. Use `.context.md` only as a temporary agent-facing projection. Do not hand-edit notebook JSON unless the user explicitly asks for raw JSON editing or the projection workflow fails and you explain why.

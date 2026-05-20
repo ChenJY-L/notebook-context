@@ -148,6 +148,37 @@ Then invoke it explicitly:
 Use $notebook-context to edit analysis.ipynb.
 ```
 
+## Install As A Claude Code Skill
+
+One-liner (user scope, available to all projects):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ChenJY-L/notebook-context/main/install.sh | bash
+```
+
+Or clone manually:
+
+```bash
+git clone https://github.com/ChenJY-L/notebook-context.git ~/.claude/skills/notebook-context
+```
+
+Override the target to install at project scope:
+
+```bash
+NOTEBOOK_CONTEXT_TARGET="$PWD/.claude/skills/notebook-context" \
+  bash <(curl -fsSL https://raw.githubusercontent.com/ChenJY-L/notebook-context/main/install.sh)
+```
+
+Update later:
+
+```bash
+git -C ~/.claude/skills/notebook-context pull
+```
+
+Requires Python 3.10+ on `PATH` for the skill scripts to run (the installer warns if the version is older).
+
+Inside Claude Code, ask it to use the skill on a notebook, for example: *"use notebook-context to edit analysis.ipynb"*.
+
 ## Test
 
 Run the standard-library test suite:
